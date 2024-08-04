@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36" version="24.7.6">
+  <diagram name="Page-1" id="xXaW_9YwNbV4lXsM11Si">
+    <mxGraphModel dx="1514" dy="1297" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-2" value="AUTHORIZATION" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-433" y="-131" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-3" value="1.Users can sign up and login&lt;div&gt;2. For every logged in user it will set cookie with JWT session with key name as its payload&lt;/div&gt;&lt;div&gt;3. Every reservation and order service will need this token to authorize request.&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-518" y="-71" width="290" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-4" value="RESERVATION" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-24" y="-131" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-5" value="1. User can reserve table for particular time slot&lt;div&gt;2. We would have maximum of 20 tables for sake of simplicity&lt;/div&gt;&lt;div&gt;3. Users can atmost make two reservations per day&lt;/div&gt;&lt;div&gt;4. Will use some kind of authorization middleware to verify request&amp;nbsp;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-106" y="-71" width="284" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-6" value="ORDERS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-433" y="135" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-8" value="1. Only those users who has their table booked under their name can only order or reserved ones only&lt;div&gt;2.This will be emitting and listeneing events to payment services and kitchen services.&lt;/div&gt;&lt;div&gt;3. This order will have different status such as &quot;PREPARING&quot;, &quot;INQUEUE&quot; and &quot;PREPARED.&quot;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-543.5" y="195" width="341" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-9" value="KITCHEN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-24" y="135" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-10" value="1. This service will receive events from orders service,&lt;div&gt;2. It will handle the orders queue an will update it status as it progresses.&lt;/div&gt;&lt;div&gt;3.It will emit events to orders service and inventory service&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-118" y="195" width="318" height="162" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-11" value="INVENTORY" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-433" y="475" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2y7FZUOEtTZr7m7rNwwb-12" value="1. This will only listen to service from kitchen.&lt;div&gt;2. It will record the number of items.&lt;/div&gt;&lt;div&gt;3. The moment it becomes 0 it will emit event to orders service, which will set it out of stock.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-530" y="535" width="320" height="105" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
