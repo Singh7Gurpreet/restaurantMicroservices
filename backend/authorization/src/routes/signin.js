@@ -15,4 +15,10 @@ route.post(
   }
 );
 
+//testing purpose
+route.get('/', (req, res) => {
+  console.log('hello from auth');
+  res.send(200);
+});
+
 module.exports = route;
