@@ -32,4 +32,20 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+UserSchema.set('toJSON', {
+  transform: (doc, ret, option) => {
+    delete ret.__v;
+    delete ret._id;
+    return ret;
+  },
+});
+
+UserSchema.statics.build = function (userObject) {
+  // will construct a UserSchema from userObject
+};
+
+UserSchema.pre('save', async function () {
+  // Logic for hashing password will be written here'
+});
+
 module.exports = mongoose.model('User', UserSchema);
