@@ -10,15 +10,10 @@ route.post(
     body('password').isLength({ min: 8 }).withMessage('Invalid Password'),
   ],
   (request, response) => {
-    console.log(request.body);
+    // check credentials if correct send jwt token else
+    // respond with error
     response.send(200);
   }
 );
-
-//testing purpose
-route.get('/', (req, res) => {
-  console.log('hello from auth');
-  res.send(200);
-});
 
 module.exports = route;

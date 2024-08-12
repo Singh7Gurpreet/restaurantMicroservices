@@ -1,21 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const { type } = require('os');
-
-// class Users {
-//   constructor(name, email, password) {
-//     this.name = name;
-//     this.email = email;
-//     this.password = password;
-//   }
-
-//   JSON() {
-//     return {
-//       name: this.name,
-//       email: this.email,
-//       password: this.password,
-//     };
-//   }
-// }
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -40,12 +25,25 @@ UserSchema.set('toJSON', {
   },
 });
 
-UserSchema.statics.build = function (userObject) {
-  // will construct a UserSchema from userObject
-};
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next(); // Skip hashing if the password hasn't been modified
+  }
 
-UserSchema.pre('save', async function () {
-  // Logic for hashing password will be written here'
+  try {
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+    next();
+  } catch (err) {
+    console.error('Error hashing password', err);
+    next(err);
+  }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.statics.build = function (userObject) {
+  return new this(userObject);
+};
+
+const model = mongoose.model('User', UserSchema);
+
+module.exports = model;

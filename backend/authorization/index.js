@@ -2,13 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const singin = require('./src/routes/signin');
-
+const signIn = require('./src/routes/signIn');
+const signUp = require('./src/routes/signUp');
+const errorHandling = require('./errors/errorHandling');
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use(singin);
+app.use(signIn);
+app.use(signUp);
 
 const start = async () => {
   try {
@@ -22,3 +24,5 @@ start();
 app.listen(3000, () => {
   console.log('Authorization services listening on 3000...');
 });
+
+app.use(errorHandling);
