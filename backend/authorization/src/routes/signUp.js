@@ -3,7 +3,6 @@ const { body } = require('express-validator');
 
 const validate = require('../../middlewares/validation');
 const UserDBConnection = require('../model/users');
-const ServerError = require('../../errors/ServerError');
 const BadRequest = require('../../errors/BadRequest');
 
 const route = express.Router();
@@ -19,7 +18,7 @@ route.post(
   async (request, response, next) => {
     try {
       const existingUser = await UserDBConnection.findOne({
-        name: request.body.name,
+        email: request.body.email,
       });
 
       if (existingUser) {
