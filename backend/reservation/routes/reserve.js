@@ -2,7 +2,8 @@ const express = require('express');
 
 const route = express.Router();
 
-route.post('/reserve', (req, res) => {
+route.get('/', (req, res) => {
+  console.log(req.session);
   // will accept req.body as
   /*{
     userId: number,
