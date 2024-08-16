@@ -31,12 +31,19 @@ route.post(
 
       if (match) {
         const token = jwt.sign(
-          { name: existingUser.name },
+          { name: existingUser.name, email: existingUser.email },
           process.env.JWT_KEY,
           {
             expiresIn: '1h',
           }
         );
+
+        // this token will be saved as token
+        request.session.token = token;
+
+        response.cookie('token', token, {
+          maxAge: 3600000,
+        });
         response.status(200).json({ token });
       } else {
         throw new BadRequest('Password is incorrect');

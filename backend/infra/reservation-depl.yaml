@@ -1,34 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: reservation-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: reservation
   template:
     metadata:
       labels:
-        app: auth
+        app: reservation
     spec:
       containers:
-        - name: auth
-          image: rex100/auth
-          env:
-          - name: JWT_KEY
-            value: "testkey"
+        - name: reservation
+          image: rex100/reservation
 ---
 
 apiVersion: v1
 kind: Service
 metadata: 
-  name: auth-srv
+  name: reservation-srv
 spec:
   selector:
-    app: auth
+    app: reservation
   ports:
-    - name: auth
+    - name: reservation
       port: 3000
       protocol: TCP
       targetPort: 3000
+

@@ -1,50 +1,31 @@
-// const mysql = require('mysql2');
+const bodyParser = require('body-parser');
+const express = require('express');
+const cookieSession = require('cookie-session');
 
-// class Database {
-//   constructor() {
-//     if (Database.instance) {
-//       return Database.instance;
-//     }
+const reserve = require('./src/routes/reserve');
+const errorHandling = require('./errors/errorHandling');
+const verifyjson = require('./middlewares/verifyjson');
+const start = require('./index');
 
-//     this.connection = null;
-//     Database.instance = this;
+const app = express();
 
-//     this.initialize();
-//   }
+app.use(
+  cookieSession({
+    secret: 'abcd',
+  })
+);
 
-//   initialize() {
-//     try {
-//       this.connection = mysql.createPool({
-//         host: 'reservation-sql-srv',
-//         user: 'root',
-//         password: '1234',
-//         database: 'reservation',
-//         waitForConnections: true,
-//         connectionLimit: 10,
-//         queueLimit: 0,
-//       });
+app.use(bodyParser.json());
 
-//       // Test the connection to ensure it's working
-//       this.connection.query('SELECT 1', (err, results) => {
-//         if (err) {
-//           console.error('Error connecting to the database:', err);
-//           // Handle the error (e.g., retry logic, fallback)
-//         } else {
-//           console.log('Database connection is successful.');
-//         }
-//       });
-//     } catch (error) {
-//       console.error('Error initializing the database connection pool:', error);
-//       // Handle initialization error (e.g., retry logic, exit process)
-//     }
-//   }
+app.use(verifyjson);
 
-//   getConnection() {
-//     if (!this.connection) {
-//       throw new Error('Database connection not initialized.');
-//     }
-//     return this.connection;
-//   }
-// }
+//routes
+app.use(reserve);
 
-// module.exports = new Database();
+start();
+
+app.use(errorHandling);
+
+app.listen(3000, () => {
+  console.log('Listening to 3000...');
+});

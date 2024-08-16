@@ -3,22 +3,22 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./frontend/infra/*
+      # - ./frontend/infra/*
       - ./backend/infra/*
 build:
   local:
     push: false
   artifacts:
-    - image: rex100/client
-      context: frontend
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "frontend/src/*.js"
-            dest: .
-          - src: "frontend/components/*.js" 
-            dest: .
+    # - image: rex100/client
+    #   context: frontend
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "frontend/src/*.js"
+    #         dest: .
+    #       - src: "frontend/components/*.js" 
+    #         dest: .
     - image: rex100/auth
       context: backend/authorization
       docker:
@@ -26,4 +26,12 @@ build:
       sync:
         manual:
           - src: "backend/authorization/*.js"
+            dest: .
+    - image: rex100/reservation
+      context: backend/reservation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "backend/reservation/*.js"
             dest: .

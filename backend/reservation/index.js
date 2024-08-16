@@ -1,35 +1,12 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const cookieSession = require('cookie-session');
-// const expressSession = require('express-session');
+const mongoose = require('mongoose');
 
-// const database = require('./app');
-const reserve = require('./routes/reserve');
-const errorHandling = require('./errors/errorHandling');
-const verifyjson = require('./middlewares/verifyjson');
+const start = async () => {
+  try {
+    await mongoose.connect('mongodb://reservation-mongo-srv:27017/reservation');
+    console.log('Connected to mongodb...');
+  } catch (error) {
+    console.log('Error occured while connecting to mongodb', error.message);
+  }
+};
 
-const app = express();
-
-app.use(
-  cookieSession({
-    secret: 'abcd',
-  })
-);
-
-app.use(bodyParser.json());
-// app.use(verifyjson);
-app.use(
-  cookieSession({
-    signed: false,
-    secure: true,
-  })
-);
-
-// app.use(expressSession());
-app.use(reserve);
-
-// app.use(errorHandling);
-
-app.listen(3000, () => {
-  console.log('Listening to 3000...');
-});
+module.exports = start;
